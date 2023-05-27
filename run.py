@@ -5,84 +5,41 @@
 #
 # Author: Sebastian Smerd
 # Project: PP3
+# Main program plus functions
 #
 
-#
-# Constant values
-#
-BOARD_SIZE = 3
+from board import Board, BOARD_SIZE, PLAYER_X, PLAYER_O
 
-#
-# Global values
-#
 scores = {
-    "X": 0,
-    "O": 0,
+    PLAYER_X : 0,
+    PLAYER_O : 0,
 }
-
-class Board:
-    """
-    Main class Board
-    """
-    def __init__(self):
-        self.board = [["." for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
     
-    def add_moves(self, player, row, col):
-        
-        if player not in "XO":
-            raise ValueError(f"Invalid player specified {player}")
-
-        self.board[row][col] = player
-
-
-    def is_move_duplicate(self, row, col):
-
-        if self.board[row][col] != '.':
-            return True
-        
-        return False
-
-    def print(self):
-        for row in self.board:
-            print(" ".join(row))
-
-    def is_finished(self):
-        return True
-    
-    def get_winner(self):
-        return "X"
-
-
 def enter_moves(board, player):
+    """
+    The function is to enter a player's moves. It also check for duplicate moves
+    """
 
-    print("Top left corner is row: 0, col: 0\n")
-    
     row, col = -1, -1
 
     while True:
-
         try:
             row = int(input(f"Enter row for player {player} (0-2): "))
-
             if row < 0 or row > BOARD_SIZE - 1:
                 raise ValueError
             else:
                 break
-
         except ValueError:
             print("Invalid row\n")
             continue
     
     while True:
-
         try:
             col = int(input(f"Enter column for player {player} (0-2): "))
-
             if col < 0 or col > BOARD_SIZE - 1:
                 raise ValueError
             else:
                 break
-            
         except ValueError:
             print("Invalid column\n")
             continue
@@ -95,46 +52,91 @@ def enter_moves(board, player):
     
     return False
 
+
+def is_game_finished():
+    """
+    The function checks if users want to finish the game.
+    """
+    while True:
+        try:
+            decision = input(f"Do you want to continue (y,n): \n")
+            if decision not in ('y', 'n'):
+                raise ValueError
+            elif decision == "y":
+                return False
+            else:
+                return True
+                
+        except ValueError:
+            print("Enter a valid decision (y,n)\n")
+            continue
+
 def print_results():
-    pass
+    """
+    The function print results.
+    """
+    print()
+    print(f"Player {PLAYER_X} won {scores[PLAYER_X]} times\n")
+    print(f"Player {PLAYER_O} won {scores[PLAYER_O]} times\n")
 
 def run_game(board):
+    """
+    The main function which run one or more games
+    """
+
+    end_game = False
+
+    print("Top left corner is row: 0, col: 0\n")
 
     while True:
-
         while True:
             if enter_moves(board, "X"):
+                board.print()
+                if board.check_win() == PLAYER_X:
+                    print(f"Player {PLAYER_X} won the game\n")
+                    scores[PLAYER_X] += 1
+                    end_game = True
+                    break
                 break
-
-        while True:        
+        while True and not end_game:        
             if enter_moves(board, "O"):
+                board.print()
+                if board.check_win() == PLAYER_O:
+                    print(f"Player {PLAYER_O} won the game\n")
+                    scores[PLAYER_O] += 1
+                    end_game = True
+                    break
                 break
 
-        board.print()
+        if end_game:
+            end_game = False
+            if is_game_finished():
+                break
+            else:
+                board.reset_game()
 
-        if board.is_finished():
-            break
 
-        winner = board.get_winner()
-
-        if winner in "XO":
-            scores[winner] += 1
-        else:
-            print("No winner this time.")
-        
-        # decision = input("Do you want to play another game (y,n)? ")
-
-        # if decision == "n":
-        #     print_results()
-        #     break
-
-    
+def print_banner():
+    """
+    The function prints the banner.
+    """
+    print()
+    print(""" #######             #######                  #######               
+    #    #  ####        #      ##    ####        #     ####  ###### 
+    #    # #    #       #     #  #  #    #       #    #    # #      
+    #    # #            #    #    # #            #    #    # #####  
+    #    # #            #    ###### #            #    #    # #      
+    #    # #    #       #    #    # #    #       #    #    # #      
+    #    #  ####        #    #    #  ####        #     ####  ###### 
+                                                                    """)
+    print()
 
 
 def main():
-    board = Board()
-    # board.print()
-    run_game(board)
+    print_banner()
+    board_game = Board()
+    run_game(board_game)
+    print_results()
 
-
-main()
+if __name__ == "__main__":
+    main()
