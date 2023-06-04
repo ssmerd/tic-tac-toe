@@ -4,16 +4,14 @@
 # Class: Board - The class implements board for Tic Tac Toc game.
 #
 
-BOARD_SIZE = 3
-PLAYER_X = 'X'
-PLAYER_O = 'O'
-
-
 
 class Board:
     """
     Main class Board. The class provides methods to run Tic Tac Toe game
     """
+    BOARD_SIZE= 3
+    PLAYER_X = 'X'
+    PLAYER_O = 'O'
 
     def __init__(self):
         """
@@ -27,18 +25,28 @@ class Board:
         The method resets the board so that players can play once or multiple 
         times.
         """
-        self.board = [["." for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+        self.board = [["." for _ in range(Board.BOARD_SIZE)] for _ in range(Board.BOARD_SIZE)]
 
-    def add_moves(self, player, row, col):
+    def add_move(self, player, row, col):
         """
         The method add moves to the board.
         """
         
-        if player not in (PLAYER_X,PLAYER_O):
+        if player not in (Board.PLAYER_X, Board.PLAYER_O):
             raise ValueError(f"Invalid player specified {player}")
 
-        self.board[row][col] = player
+        if not self.is_valid_move(row, col):
+            raise ValueError("Invalid move")
 
+        self.board[row][col] = player
+    
+    def is_valid_move(self, row, col):
+        """
+        Check if a move is valid.
+        """
+        if 0 <= row < Board.BOARD_SIZE and 0 <= col < Board.BOARD_SIZE and self.board[row][col] == ".":
+            return True
+        return False
 
     def is_move_duplicate(self, row, col):
         """
@@ -48,7 +56,7 @@ class Board:
             return True    
         return False
 
-    def print(self):
+    def print_board(self):
         """
         The mothod prints the board.
         """
@@ -56,57 +64,66 @@ class Board:
         for row in self.board:
             print(" ".join(row))
         print()
-        
-    def check_win(self):
+    
+    def is_full(self):
+        """
+        Check if the board is full.
+        """
+        for row in self.board:
+            if "." in row:
+                return False
+        return True
+
+    def is_winner(self):
         """
         The method check for win.
         """
 
         # Check horizontal lines
         if ((self.board[0][0] == self.board[0][1] == self.board[0][2] 
-                == PLAYER_X)
+                == Board.PLAYER_X)
             or (self.board[1][0] == self.board[1][1] == self.board[1][2] 
-                == PLAYER_X)
+                == Board.PLAYER_X)
             or (self.board[2][0] == self.board[2][1] == self.board[2][2] 
-                == PLAYER_X)):
-            return PLAYER_X
+                == Board.PLAYER_X)):
+            return Board.PLAYER_X
 
         if ((self.board[0][0] == self.board[0][1] == self.board[0][2] 
-                == PLAYER_O)
+                == Board.PLAYER_O)
             or (self.board[1][0] == self.board[1][1] == self.board[1][2] 
-                == PLAYER_O)
+                == Board.PLAYER_O)
             or (self.board[2][0] == self.board[2][1] == self.board[2][2] 
-                == PLAYER_O)):
-            return PLAYER_O
+                == Board.PLAYER_O)):
+            return Board.PLAYER_O
 
         # Check vertical lines
         if ((self.board[0][0] == self.board[1][0] == self.board[2][0]
-                == PLAYER_X)
+                == Board.PLAYER_X)
             or (self.board[0][1] == self.board[1][1] == self.board[2][1]
-                == PLAYER_X)
+                == Board.PLAYER_X)
             or (self.board[0][2] == self.board[1][2] == self.board[2][2]
-                == PLAYER_X)):
-            return PLAYER_X
+                == Board.PLAYER_X)):
+            return Board.PLAYER_X
 
         if ((self.board[0][0] == self.board[1][0] == self.board[2][0]
-                == PLAYER_O)
+                == Board.PLAYER_O)
             or (self.board[0][1] == self.board[1][1] == self.board[2][1]
-                == PLAYER_O)
+                == Board.PLAYER_O)
             or (self.board[0][2] == self.board[1][2] == self.board[2][2]
-                == PLAYER_O)):
-            return PLAYER_O
+                == Board.PLAYER_O)):
+            return Board.PLAYER_O
 
         # Check for cross lines
         if ((self.board[0][0] == self.board[1][1] == self.board[2][2] 
-                == PLAYER_X) 
+                == Board.PLAYER_X) 
             or (self.board[0][2] == self.board[1][1] == self.board[2][0]
-                == PLAYER_X)): 
-            return PLAYER_X
+                == Board.PLAYER_X)): 
+            return Board.PLAYER_X
 
         if ((self.board[0][0] == self.board[1][1] == self.board[2][2] 
-                == PLAYER_O) 
+                == Board.PLAYER_O) 
             or (self.board[0][2] == self.board[1][1] == self.board[2][0]
-                == PLAYER_O)): 
-            return PLAYER_O
+                == Board.PLAYER_O)): 
+            return Board.PLAYER_O
 
         return None 

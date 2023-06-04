@@ -8,14 +8,14 @@
 # Main program plus functions
 #
 
-from board import Board, BOARD_SIZE, PLAYER_X, PLAYER_O
+from board import Board
 
 scores = {
-    PLAYER_X : 0,
-    PLAYER_O : 0,
+    Board.PLAYER_X : 0,
+    Board.PLAYER_O : 0,
 }
     
-def enter_moves(board, player):
+def add_moves(board, player):
     """
     The function is to enter a player's moves. It also check for duplicate moves
     """
@@ -25,7 +25,7 @@ def enter_moves(board, player):
     while True:
         try:
             row = int(input(f"Enter row for player {player} (0-2): "))
-            if row < 0 or row > BOARD_SIZE - 1:
+            if row < 0 or row > Board.BOARD_SIZE - 1:
                 raise ValueError
             else:
                 break
@@ -36,7 +36,7 @@ def enter_moves(board, player):
     while True:
         try:
             col = int(input(f"Enter column for player {player} (0-2): "))
-            if col < 0 or col > BOARD_SIZE - 1:
+            if col < 0 or col > Board.BOARD_SIZE - 1:
                 raise ValueError
             else:
                 break
@@ -45,7 +45,7 @@ def enter_moves(board, player):
             continue
 
     if not board.is_move_duplicate(row, col):
-        board.add_moves(player, row, col)
+        board.add_move(player, row, col)
         return True
     else:
         print("Error: You have entered duplicate moves.")
@@ -59,7 +59,7 @@ def is_game_finished():
     """
     while True:
         try:
-            decision = input(f"Do you want to continue (y,n): \n")
+            decision = input(f"Do you want to continue (y,n): ").lower()
             if decision not in ('y', 'n'):
                 raise ValueError
             elif decision == "y":
@@ -76,8 +76,8 @@ def print_results():
     The function print results.
     """
     print()
-    print(f"Player {PLAYER_X} won {scores[PLAYER_X]} times\n")
-    print(f"Player {PLAYER_O} won {scores[PLAYER_O]} times\n")
+    print(f"Player {Board.PLAYER_X} won {scores[Board.PLAYER_X]} times\n")
+    print(f"Player {Board.PLAYER_O} won {scores[Board.PLAYER_O]} times\n")
 
 def run_game(board):
     """
@@ -90,20 +90,26 @@ def run_game(board):
 
     while True:
         while True:
-            if enter_moves(board, "X"):
-                board.print()
-                if board.check_win() == PLAYER_X:
-                    print(f"Player {PLAYER_X} won the game\n")
-                    scores[PLAYER_X] += 1
+            if add_moves(board, Board.PLAYER_X):
+                board.print_board()
+                if board.is_full():
+                    print(f"No one won the game\n")
+                    end_game = True
+                if board.is_winner() == Board.PLAYER_X:
+                    print(f"Player {Board.PLAYER_X} won the game\n")
+                    scores[Board.PLAYER_X] += 1
                     end_game = True
                     break
                 break
         while True and not end_game:        
-            if enter_moves(board, "O"):
-                board.print()
-                if board.check_win() == PLAYER_O:
-                    print(f"Player {PLAYER_O} won the game\n")
-                    scores[PLAYER_O] += 1
+            if add_moves(board, Board.PLAYER_O):
+                board.print_board()
+                if board.is_full():
+                    print(f"No one won the game\n")
+                    end_game = True
+                if board.is_winner() == Board.PLAYER_O:
+                    print(f"Player {Board.PLAYER_O} won the game\n")
+                    scores[Board.PLAYER_O] += 1
                     end_game = True
                     break
                 break
