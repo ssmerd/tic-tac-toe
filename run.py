@@ -11,13 +11,15 @@
 from board import Board
 
 scores = {
-    Board.PLAYER_X : 0,
-    Board.PLAYER_O : 0,
+    Board.PLAYER_X: 0,
+    Board.PLAYER_O: 0,
 }
-    
+
+
 def add_moves(board, player):
     """
-    The function is to enter a player's moves. It also check for duplicate moves
+    The function is to enter a player's moves.
+    It also check for duplicate moves
     """
 
     row, col = -1, -1
@@ -32,7 +34,6 @@ def add_moves(board, player):
         except ValueError:
             print("Invalid row\n")
             continue
-    
     while True:
         try:
             col = int(input(f"Enter column for player {player} (0-2): "))
@@ -49,7 +50,6 @@ def add_moves(board, player):
         return True
     else:
         print("Error: You have entered duplicate moves.")
-    
     return False
 
 
@@ -66,10 +66,10 @@ def is_game_finished():
                 return False
             else:
                 return True
-                
         except ValueError:
             print("Enter a valid decision (y,n)\n")
             continue
+
 
 def print_results():
     """
@@ -78,6 +78,7 @@ def print_results():
     print()
     print(f"Player {Board.PLAYER_X} won {scores[Board.PLAYER_X]} times\n")
     print(f"Player {Board.PLAYER_O} won {scores[Board.PLAYER_O]} times\n")
+
 
 def run_game(board):
     """
@@ -101,7 +102,7 @@ def run_game(board):
                     end_game = True
                     break
                 break
-        while True and not end_game:        
+        while True and not end_game:
             if add_moves(board, Board.PLAYER_O):
                 board.print_board()
                 if board.is_full():
@@ -127,13 +128,13 @@ def print_banner():
     The function prints the banner.
     """
     print()
-    print(""" #######             #######                  #######               
-    #    #  ####        #      ##    ####        #     ####  ###### 
-    #    # #    #       #     #  #  #    #       #    #    # #      
-    #    # #            #    #    # #            #    #    # #####  
-    #    # #            #    ###### #            #    #    # #      
-    #    # #    #       #    #    # #    #       #    #    # #      
-    #    #  ####        #    #    #  ####        #     ####  ###### 
+    print(""" #######             #######                  #######
+    #    #  ####        #      ##    ####        #     ####  ######
+    #    # #    #       #     #  #  #    #       #    #    # #
+    #    # #            #    #    # #            #    #    # #####
+    #    # #            #    ###### #            #    #    # #
+    #    # #    #       #    #    # #    #       #    #    # #
+    #    #  ####        #    #    #  ####        #     ####  ######
                                                                     """)
     print()
 
@@ -143,6 +144,7 @@ def main():
     board_game = Board()
     run_game(board_game)
     print_results()
+
 
 if __name__ == "__main__":
     main()

@@ -9,7 +9,7 @@ class Board:
     """
     Main class Board. The class provides methods to run Tic Tac Toe game
     """
-    BOARD_SIZE= 3
+    BOARD_SIZE = 3
     PLAYER_X = 'X'
     PLAYER_O = 'O'
 
@@ -18,20 +18,20 @@ class Board:
         The class constructor.
         """
         self.reset_game()
-    
 
     def reset_game(self):
         """
-        The method resets the board so that players can play once or multiple 
-        times.
+        The method resets the board so that players can
+        play once or multipletimes.
         """
-        self.board = [["." for _ in range(Board.BOARD_SIZE)] for _ in range(Board.BOARD_SIZE)]
+        self.board =
+        [["." for _ in range(Board.BOARD_SIZE)]
+            for _ in range(Board.BOARD_SIZE)]
 
     def add_move(self, player, row, col):
         """
         The method add moves to the board.
         """
-        
         if player not in (Board.PLAYER_X, Board.PLAYER_O):
             raise ValueError(f"Invalid player specified {player}")
 
@@ -39,12 +39,14 @@ class Board:
             raise ValueError("Invalid move")
 
         self.board[row][col] = player
-    
+
     def is_valid_move(self, row, col):
         """
         Check if a move is valid.
         """
-        if 0 <= row < Board.BOARD_SIZE and 0 <= col < Board.BOARD_SIZE and self.board[row][col] == ".":
+        if 0 <= row < Board.BOARD_SIZE and
+        0 <= col < Board.BOARD_SIZE
+        and self.board[row][col] == ".":
             return True
         return False
 
@@ -53,7 +55,7 @@ class Board:
         The mothod check for duplicate moves
         """
         if self.board[row][col] != '.':
-            return True    
+            return True
         return False
 
     def print_board(self):
@@ -64,7 +66,7 @@ class Board:
         for row in self.board:
             print(" ".join(row))
         print()
-    
+
     def is_full(self):
         """
         Check if the board is full.
@@ -80,19 +82,19 @@ class Board:
         """
 
         # Check horizontal lines
-        if ((self.board[0][0] == self.board[0][1] == self.board[0][2] 
+        if ((self.board[0][0] == self.board[0][1] == self.board[0][2]
                 == Board.PLAYER_X)
-            or (self.board[1][0] == self.board[1][1] == self.board[1][2] 
+            or (self.board[1][0] == self.board[1][1] == self.board[1][2]
                 == Board.PLAYER_X)
-            or (self.board[2][0] == self.board[2][1] == self.board[2][2] 
+            or (self.board[2][0] == self.board[2][1] == self.board[2][2]
                 == Board.PLAYER_X)):
             return Board.PLAYER_X
 
-        if ((self.board[0][0] == self.board[0][1] == self.board[0][2] 
+        if ((self.board[0][0] == self.board[0][1] == self.board[0][2]
                 == Board.PLAYER_O)
-            or (self.board[1][0] == self.board[1][1] == self.board[1][2] 
+            or (self.board[1][0] == self.board[1][1] == self.board[1][2]
                 == Board.PLAYER_O)
-            or (self.board[2][0] == self.board[2][1] == self.board[2][2] 
+            or (self.board[2][0] == self.board[2][1] == self.board[2][2]
                 == Board.PLAYER_O)):
             return Board.PLAYER_O
 
@@ -114,16 +116,16 @@ class Board:
             return Board.PLAYER_O
 
         # Check for cross lines
-        if ((self.board[0][0] == self.board[1][1] == self.board[2][2] 
-                == Board.PLAYER_X) 
+        if ((self.board[0][0] == self.board[1][1] == self.board[2][2]
+                == Board.PLAYER_X)
             or (self.board[0][2] == self.board[1][1] == self.board[2][0]
-                == Board.PLAYER_X)): 
+                == Board.PLAYER_X)):
             return Board.PLAYER_X
 
-        if ((self.board[0][0] == self.board[1][1] == self.board[2][2] 
-                == Board.PLAYER_O) 
+        if ((self.board[0][0] == self.board[1][1] == self.board[2][2]
+                == Board.PLAYER_O)
             or (self.board[0][2] == self.board[1][1] == self.board[2][0]
-                == Board.PLAYER_O)): 
+                == Board.PLAYER_O)):
             return Board.PLAYER_O
 
-        return None 
+        return None
