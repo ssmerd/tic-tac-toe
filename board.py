@@ -24,9 +24,9 @@ class Board:
         The method resets the board so that players can
         play once or multipletimes.
         """
-        self.board =
-        [["." for _ in range(Board.BOARD_SIZE)]
-            for _ in range(Board.BOARD_SIZE)]
+        self.board = \
+            [["." for _ in range(Board.BOARD_SIZE)]
+                for _ in range(Board.BOARD_SIZE)]
 
     def add_move(self, player, row, col):
         """
@@ -44,9 +44,9 @@ class Board:
         """
         Check if a move is valid.
         """
-        if 0 <= row < Board.BOARD_SIZE and
-        0 <= col < Board.BOARD_SIZE
-        and self.board[row][col] == ".":
+        if 0 <= row < Board.BOARD_SIZE and \
+            0 <= col < Board.BOARD_SIZE \
+                and self.board[row][col] == ".":
             return True
         return False
 
