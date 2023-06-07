@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-Tic Tac Toe is a Python terminal game, which runs in a Code Institute mock terminal pn Heroku.
+Tic Tac Toe is a Python terminal game, which runs in a Code Institute mock terminal on Heroku.
 
 It is a game for two players who take turns marking the spaces in a three-by-three grid with X or O. 
 The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner. 
@@ -25,9 +25,9 @@ The grid starts with (0,0) coordinates and ends with (2,2).
 
 * Enter user input
 
-    Enter the first user input by inputing two coordinates a row and column. 
+    Enter the first user input by inputing two coordinates, a row and column. 
     Print the board.
-    Enter the second user input by inputing two coordinates a row and column. 
+    Enter the second user input by inputing two coordinates, a row and column. 
 
 ![Main Grid](readme/main.png)
 
